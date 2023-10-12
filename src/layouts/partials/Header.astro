@@ -1,0 +1,120 @@
+---
+import Logo from "@components/Logo.astro";
+import menu from "@config/menu.json";
+import socials from "@config/social.json";
+import { IoSearch, IoLogoGithub, IoLogoLinkedin, IoMenu, IoClose } from "react-icons/io5/index.js";
+
+export interface ChildNavigationLink {
+  name: string;
+  url: string;
+}
+
+export interface NavigationLink {
+  name: string;
+  url: string;
+  hasChildren?: boolean;
+  children?: ChildNavigationLink[];
+}
+
+const { main }: { main: NavigationLink[] } = menu;
+const { github, linkedin } = socials;
+---
+
+<header class="header pt-6">
+  <nav class="navbar container">
+    <!-- logo -->
+    <div class="order-0">
+      <Logo />
+    </div>
+    <!-- navbar toggler -->
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      id="show-button"
+      for="nav-toggle"
+      class="order-2 flex cursor-pointer items-center text-black md:order-1 md:hidden"
+    >
+    <div
+      class="mr-0 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:pr-4"
+    >
+      <IoMenu />
+    </div>
+    </label>
+    <label
+      id="hide-button"
+      for="nav-toggle"
+      class="order-2 hidden cursor-pointer items-center text-black md:order-1"
+    >
+    <div
+      class="mr-0 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:pr-4"
+    >
+      <IoClose />
+    </div>
+    </label>
+    <!-- /navbar toggler -->
+
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden w-full md:order-1 md:flex md:w-auto"
+    >
+      {
+        main.map((menu) => (
+          <>
+            {menu.hasChildren ? (
+              <li class="nav-item nav-dropdown group relative cursor-pointer">
+                <span class="nav-link inline-flex items-center">
+                  {menu.name}
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </span>
+                <ul class="nav-dropdown-list hidden group-hover:block md:invisible md:absolute md:block md:opacity-0 md:group-hover:visible md:group-hover:opacity-100">
+                  {menu.children?.map((child) => (
+                    <li class="nav-dropdown-item">
+                      <a href={child.url} class="nav-dropdown-link">
+                        {child.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li class="nav-item">
+                <a href={menu.url} class="nav-link block">
+                  {menu.name}
+                </a>
+              </li>
+            )}
+          </>
+        ))
+      }
+    </ul>
+    <div class="order-1 ml-auto flex md:order-2 md:ml-0">
+      <a
+        class="mr-2 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0 md:pr-4 border-r"
+        href="/search"
+        title="Search"
+        aria-label="search"
+      >
+        <IoSearch />
+      </a>
+      <a
+        class="mr-4 ml-2 hidden cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0 md:inline-block"
+        aria-label="github"
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+      >
+        <IoLogoGithub />
+      </a>
+      <a
+        class="mr-4 hidden cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0 md:inline-block"
+        aria-label="linkedin"
+        href={linkedin}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+      >
+        <IoLogoLinkedin />
+      </a>
+    </div>
+  </nav>
+</header>

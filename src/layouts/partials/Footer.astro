@@ -1,0 +1,15 @@
+---
+import Social from "@components/Social.astro";
+import config from "@config/config.json";
+import social from "@config/social.json";
+import { markdownify } from "@lib/utils/textConverter";
+---
+
+<footer class="section">
+  <div class="container text-center">
+    {/* social icons */}
+    <Social source={social} className="social-icons mb-8 fill-black" />
+    {/* copyright */}
+    <p set:html={markdownify(config.params.copyright)} class="text-black/75" />
+  </div>
+</footer>

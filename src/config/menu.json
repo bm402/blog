@@ -1,0 +1,20 @@
+{
+  "main": [
+    {
+      "name": "Blog",
+      "url": "/"
+    },
+    {
+      "name": "Categories",
+      "url": "/categories"
+    },
+    {
+      "name": "Tags",
+      "url": "/tags"
+    },
+    {
+      "name": "About",
+      "url": "/about"
+    }
+  ]
+}
